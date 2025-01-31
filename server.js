@@ -4,7 +4,7 @@ const app = express();
 
 require('dotenv').config()
 
-const { userDB, cryptoDB } = require("./connectMongo");
+const connectDB = require("./connectMongo");
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const cors = require('cors');
