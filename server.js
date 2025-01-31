@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 27017;
 app.use(bodyParser.json());
 app.use(cors());
 
+connectDB();
 
 // User Schema
 const userSchema = new mongoose.Schema({
