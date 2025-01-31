@@ -38,7 +38,7 @@ connectDB().then((connection) => {
         changeDaystr: String,
         name: String,
         pricestr: String,
-    });
+    }, { collection: 'crypto_prices' });
     const Crypto = cryptoDB.model('Crypto', cryptoSchema);
 
     // Crypto Routes
