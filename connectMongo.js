@@ -11,4 +11,4 @@ const connectDB = async () => {
     }
 
 }
-module.exports = connectDB
+module.exports = { userDB: mongoose.connection, cryptoDB: cryptoConnection }

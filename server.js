@@ -4,7 +4,7 @@ const app = express();
 
 require('dotenv').config()
 
-const connectDB = require("./connectMongo");
+const { userDB, cryptoDB } = require("./connectMongo");
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -23,10 +23,11 @@ const userSchema = new mongoose.Schema({
     email: String,
     phone: String,
 });
-const User = mongoose.model('User', userSchema);
+const User = userDB.model('User', userSchema);
 
 // Crypto Schema
-mongoose.connection.useDb('prices');
+// mongoose.connection.useDb('prices');
+
 const cryptoSchema = new mongoose.Schema({
     type: String,
     code: String,
@@ -34,7 +35,7 @@ const cryptoSchema = new mongoose.Schema({
     name: String,
     pricestr: String,
 });
-const Crypto = mongoose.model('Crypto', cryptoSchema);
+const Crypto = cryptoDB.model('Crypto', cryptoSchema);
 
 // Crypto Routes
 app.get('/crypto', async (req, res) => {
