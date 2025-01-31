@@ -15,7 +15,17 @@ const PORT = process.env.PORT || 27017;
 app.use(bodyParser.json());
 app.use(cors());
 
-connectDB();
+
+let userDB, cryptoDB;
+
+connectDB().then((connection) => {
+    userDB = connection.userDB;
+    cryptoDB = connection.cryptoDB;
+    console.log('MongoDB connections established');
+}).catch((error) => {
+    console.error('MongoDB Connection Error:', error);
+    process.exit(1);
+});
 
 // User Schema
 const userSchema = new mongoose.Schema({
