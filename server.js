@@ -22,59 +22,64 @@ connectDB().then((connection) => {
     userDB = connection.userDB;
     cryptoDB = connection.cryptoDB;
     console.log('MongoDB connections established');
+
+    // User Schema
+    const userSchema = new mongoose.Schema({
+        fullName: String,
+        email: String,
+        phone: String,
+    });
+    const User = userDB.model('User', userSchema);
+
+    // Crypto Schema
+    const cryptoSchema = new mongoose.Schema({
+        type: String,
+        code: String,
+        changeDaystr: String,
+        name: String,
+        pricestr: String,
+    });
+    const Crypto = cryptoDB.model('Crypto', cryptoSchema);
+
+    // Crypto Routes
+    app.get('/crypto', async (req, res) => {
+        try {
+            const cryptoData = await Crypto.find();
+            console.log(cryptoData);
+            res.json(cryptoData);
+        }
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    });
+
+    app.get('/users', async (req, res) => {
+        try {
+            const users = await User.find();
+            console.log(users);
+            res.json(users);
+        }
+
+        catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    });
+
+
+    app.listen(PORT, () => {
+        console.log("Server is running on port " + PORT);
+    });
+
 }).catch((error) => {
     console.error('MongoDB Connection Error:', error);
     process.exit(1);
 });
 
-// User Schema
-const userSchema = new mongoose.Schema({
-    fullName: String,
-    email: String,
-    phone: String,
-});
-const User = userDB.model('User', userSchema);
-
-// Crypto Schema
-// mongoose.connection.useDb('prices');
-
-const cryptoSchema = new mongoose.Schema({
-    type: String,
-    code: String,
-    changeDaystr: String,
-    name: String,
-    pricestr: String,
-});
-const Crypto = cryptoDB.model('Crypto', cryptoSchema);
-
-// Crypto Routes
-app.get('/crypto', async (req, res) => {
-    try {
-        const cryptoData = await Crypto.find();
-        console.log(cryptoData);
-        res.json(cryptoData);
-    }
-    catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
-
-app.get('/users', async (req, res) => {
-    try {
-        const users = await User.find();
-        console.log(users);
-        res.json(users);
-    }
-
-    catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 
-app.listen(PORT, () => {
-    console.log("Server is running on port " + PORT);
-});
+
+
+
 
 // require('dotenv').config();
 // const express = require('express');
