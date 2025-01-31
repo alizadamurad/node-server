@@ -42,7 +42,7 @@ connectDB().then((connection) => {
     const Crypto = cryptoDB.model('Crypto', cryptoSchema);
 
     // Crypto Routes
-    app.get('/crypto', async (req, res) => {
+    app.get('/crypto_prices', async (req, res) => {
         try {
             const cryptoData = await Crypto.find();
             console.log(cryptoData);
