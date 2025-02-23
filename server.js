@@ -23,7 +23,7 @@ connectDB()
             fullName: String,
             email: String,
             phone: String,
-        });
+        }, { versionKey: false });
         const User = userDB.model('User', userSchema);
 
         // Crypto Schema (for prices database)
